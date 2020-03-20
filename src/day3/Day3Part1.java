@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 
 public class Day3Part1
 {
-	private static String[][] grid = new String[100][100];
-	private static ArrayList<List<String>> linesList = new ArrayList<List<String>>();
+	private static int mapSize = 20000;
+	
+	private static String[][] grid = new String[mapSize][mapSize];
+	private static List<List<String>> linesList = new ArrayList<List<String>>();
 	
 	
 	public static void main(String[] args)
@@ -66,7 +68,7 @@ public class Day3Part1
 							}
 							case 'L':
 							{
-								for(int s= lineStart.x-length; s >= lineStart.x; s++ )
+								for(int s= lineStart.x; s >= lineStart.x-length; s-- )
 									{
 										if(grid[lineStart.y][s].equals("Y") == true) continue;
 										else if(grid[lineStart.y][s].equals(".") == true)  grid[lineStart.y][s] = i+"";
@@ -78,7 +80,8 @@ public class Day3Part1
 							}
 							case 'U':
 							{
-								for(int s= lineStart.y-length; s >=lineStart.y; s++ )
+								
+								for(int s= lineStart.y; s >=lineStart.y-length; s-- )
 									{
 										if(grid[s][lineStart.x].equals("Y") == true) continue;
 										else if(grid[s][lineStart.x].equals(".") == true)  grid[s][lineStart.x] = i+"";
@@ -94,14 +97,29 @@ public class Day3Part1
 			}
 		
 		
+//		for(int i = 0; i< grid.length; i++)
+//			{
+//				for(int j = 0; j<grid[0].length; j++)
+//					{
+//						System.out.print(grid[i][j]);
+//					}
+//				System.out.println();
+//			}
+		
+		int shortesetPoint = mapSize + mapSize;
+		
 		for(int i = 0; i< grid.length; i++)
 			{
 				for(int j = 0; j<grid[0].length; j++)
 					{
-						System.out.print(grid[i][j]);
+						if(grid[i][j].equals("X")){
+							int distance = Math.abs(startingPoint.x - i)  + Math.abs(startingPoint.y - j);
+							if(distance < shortesetPoint) shortesetPoint = distance;
+						}
 					}
-				System.out.println();
 			}
+		
+		System.out.println("shortest distance: "+shortesetPoint);
 	}
 	
 	
